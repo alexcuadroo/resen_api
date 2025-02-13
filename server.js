@@ -1,16 +1,12 @@
-// Importar dependencias
 import express from 'express';
 import cors from 'cors';
 import { Resend } from 'resend';
 import dotenv from 'dotenv';
 
-// Cargar variables de entorno desde .env
 dotenv.config();
 
-// Crear una instancia de Express
 const app = express();
 
-// Configurar CORS para permitir solicitudes 
 const allowedOrigins = ['http://localhost:4321', 'https://edualex.uy', 'https://www.edualex.uy', 'https://edualex.uy/'];
 
 app.use(cors({
@@ -30,7 +26,6 @@ app.use(express.json());
 // Inicializar Resend con la API key
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Ruta para manejar el envío de correos electrónicos
 app.post('/api/send-email', async (req, res) => {
     try {
         // Obtener los datos del cuerpo de la solicitud
@@ -44,7 +39,6 @@ app.post('/api/send-email', async (req, res) => {
             });
         }
 
-        // Enviar el correo electrónico usando Resend
         const data = await resend.emails.send({
             from: 'no-reply@edualex.uy',
             to: 'help@edualex.uy',
@@ -53,17 +47,14 @@ app.post('/api/send-email', async (req, res) => {
         <p><strong>Nombre:</strong> ${nombre}</p>
         <p><strong>Correo electrónico:</strong> ${correo}</p>
         <p><strong>Mensaje:</strong> ${mensaje}</p>
-      `, // Cuerpo del correo en HTML
+      `,
         });
-
-        // Responder con éxito
         res.status(200).json({
             success: true,
             message: 'Correo enviado con éxito',
             data,
         });
     } catch (error) {
-        // Manejar errores
         console.error('Error al enviar el correo:', error);
         res.status(500).json({
             success: false,
@@ -73,10 +64,8 @@ app.post('/api/send-email', async (req, res) => {
     }
 });
 app.get('/', (req, res) => { res.send('Hello World!'); });
-// Iniciar el servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
-
 export default app;
