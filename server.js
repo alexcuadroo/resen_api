@@ -1,5 +1,6 @@
 // Importar dependencias
 import express from 'express';
+import cors from 'cors';
 import { Resend } from 'resend';
 import dotenv from 'dotenv';
 
@@ -8,6 +9,20 @@ dotenv.config();
 
 // Crear una instancia de Express
 const app = express();
+
+// Configurar CORS para permitir solicitudes 
+const allowedOrigins = ['http://localhost:4321', 'https://edualex.uy', 'https://www.edualex.uy','https://edualex.uy/'];
+
+app.use(cors({
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('No permitido por CORS'));
+        }
+    },
+    methods: ['POST'],
+}));
 
 // Middleware para parsear el cuerpo de las solicitudes en formato JSON
 app.use(express.json());
@@ -31,9 +46,9 @@ app.post('/api/send-email', async (req, res) => {
 
         // Enviar el correo electrónico usando Resend
         const data = await resend.emails.send({
-            from: 'no-reply@edualex.uy', // Cambia esto a tu dominio verificado en Resend
-            to: 'help@edualex.uy', // Cambia esto al correo donde quieres recibir los mensajes
-            subject: `Nuevo mensaje de ${nombre}`, // Asunto del correo
+            from: 'no-reply@edualex.uy',
+            to: 'help@edualex.uy',  
+            subject: `Nuevo mensaje de ${nombre} desde EduAlex`,
             html: `
         <p><strong>Nombre:</strong> ${nombre}</p>
         <p><strong>Correo electrónico:</strong> ${correo}</p>
