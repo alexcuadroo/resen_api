@@ -3,9 +3,9 @@ const cors = require('cors');
 const app = express();
 
 app.use(cors({
-    origin: 'http://localhost:4321, https://edualex.uy',
-    methods: ['GET', 'POST', 'OPTIONS'], // Métodos permitidos
-    allowedHeaders: ['Content-Type'], // Encabezados permitidos
+    origin: 'http://localhost:4321/, https://edualex.uy/',
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type'],
 }));
 app.get('/', (req, res) => {
     res.send('¡Hola, mundo!');
