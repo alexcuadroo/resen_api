@@ -11,7 +11,7 @@ dotenv.config();
 const app = express();
 
 // Configurar CORS para permitir solicitudes 
-const allowedOrigins = ['http://localhost:4321', 'https://edualex.uy', 'https://www.edualex.uy','https://edualex.uy/'];
+const allowedOrigins = ['http://localhost:4321', 'https://edualex.uy', 'https://www.edualex.uy', 'https://edualex.uy/'];
 
 app.use(cors({
     origin: (origin, callback) => {
@@ -47,7 +47,7 @@ app.post('/api/send-email', async (req, res) => {
         // Enviar el correo electrónico usando Resend
         const data = await resend.emails.send({
             from: 'no-reply@edualex.uy',
-            to: 'help@edualex.uy',  
+            to: 'help@edualex.uy',
             subject: `Nuevo mensaje de ${nombre} desde EduAlex`,
             html: `
         <p><strong>Nombre:</strong> ${nombre}</p>
@@ -78,3 +78,5 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
+
+export default app;
