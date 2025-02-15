@@ -43,11 +43,21 @@ app.post('/api/send-email', async (req, res) => {
             from: 'no-reply@edualex.uy',
             to: 'help@edualex.uy',
             subject: `Nuevo mensaje de ${nombre} desde EduAlex`,
-            html: `
-        <p><strong>Nombre:</strong> ${nombre}</p>
-        <p><strong>Correo electrónico:</strong> ${correo}</p>
-        <p><strong>Mensaje:</strong> ${mensaje}</p>
-      `,
+            html: `<table style="width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 14px; color: #333;">
+  <tr>
+    <td style="padding: 8px; border: 1px solid #ddd; background-color: #f4f4f4; font-weight: bold;">Nombre:</td>
+    <td style="padding: 8px; border: 1px solid #ddd;">${nombre}</td>
+  </tr>
+  <tr>
+    <td style="padding: 8px; border: 1px solid #ddd; background-color: #f4f4f4; font-weight: bold;">Correo electrónico:</td>
+    <td style="padding: 8px; border: 1px solid #ddd;">${correo}</td>
+  </tr>
+  <tr>
+    <td style="padding: 8px; border: 1px solid #ddd; background-color: #f4f4f4; font-weight: bold;">Mensaje:</td>
+    <td style="padding: 8px; border: 1px solid #ddd;">${mensaje}</td>
+  </tr>
+</table>
+`,
         });
         res.status(200).json({
             success: true,
