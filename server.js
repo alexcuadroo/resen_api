@@ -40,7 +40,7 @@ app.post('/api/send-email', async (req, res) => {
         }
 
         const data = await resend.emails.send({
-            from: 'no-reply@edualex.uy',
+            from: 'web@edualex.uy',
             to: 'help@edualex.uy',
             subject: `Nuevo mensaje de ${nombre} desde EduAlex`,
             html: `<table style="width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 14px; color: #333;">
@@ -58,6 +58,9 @@ app.post('/api/send-email', async (req, res) => {
   </tr>
 </table>
 `,
+            text: `Nombre: ${nombre}
+Correo electrónico: ${correo}
+Mensaje: ${mensaje}`
         });
         res.status(200).json({
             success: true,
